@@ -1,0 +1,6 @@
+lpstats.egg-info
+*.pyc
+*.swp
+.cache
+build
+dist
