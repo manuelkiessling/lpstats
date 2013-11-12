@@ -35,5 +35,4 @@ class Aggregator(object):
             result.append({'date': date, 'number_of_sales': sales[date]})
         return result
 
-
 New = Aggregator  

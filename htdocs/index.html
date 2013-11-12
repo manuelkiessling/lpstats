@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Leanpub sales statistics</title>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="chart.js"></script>
+  </head>
+  <body>
+    <canvas id="chart" width="1280" height="800"></canvas>
+
+    <script language="javascript">
+      var ctx = document.getElementById('chart').getContext('2d');
+
+      $.getJSON('/number_of_sales_by_day.json', function(response) {
+        var chart_data = {
+          labels: response.labels,
+          datasets: [
+            {
+              fillColor: '#cfc',
+              strokeColor: '#070',
+              pointColor: '#070',
+              pointStrokeColor: '#cfc',
+              data: response.data
+            },
+          ]
+        };
+
+        new Chart(ctx).Line(chart_data);
+      });
+
+    </script>
+  </body>
+</html>

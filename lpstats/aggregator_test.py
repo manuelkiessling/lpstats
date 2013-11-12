@@ -79,3 +79,6 @@ class AggregatorTest(unittest.TestCase):
                           },
                          ]
         self.assertEquals(expected_sales, sales)
+
+if __name__ == '__main__':
+    unittest.main()
