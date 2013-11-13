@@ -1,8 +1,13 @@
-import lpclient
+import client
 
 class Collector(object):
-    def __init__(self, api_key, book_slug):
-        self.client = lpclient.Client(api_key)
+    def __init__(self):
+        self.client = client.New()
+
+    def set_api_key(self, api_key):
+        self.client.set_api_key(api_key)
+
+    def set_book_slug(self, book_slug):
         self.client.set_book_slug(book_slug)
 
     def get_all_sales(self):

@@ -3,30 +3,51 @@
   <head>
     <title>Leanpub sales statistics</title>
     <script type="text/javascript" src="jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="chart.js"></script>
+    <script type="text/javascript" src="chart-8f025f33c0.js"></script>
   </head>
   <body>
-    <canvas id="chart" width="1280" height="800"></canvas>
+    <label for="api_key">Your Leanpub API Key:</label>
+    <input id="api_key" type="text" name="api_key">
+    <br>
+    <label for="book_slug">Book slug:</label>
+    <input id="book_slug" type="text" name="book_slug">
+    <br>
+    <input type="submit" onclick="updateChart();">
+    <br>
+
+    <canvas id="chart" width="800" height="600"></canvas>
 
     <script language="javascript">
       var ctx = document.getElementById('chart').getContext('2d');
 
-      $.getJSON('/number_of_sales_by_day.json', function(response) {
-        var chart_data = {
-          labels: response.labels,
-          datasets: [
-            {
-              fillColor: '#cfc',
-              strokeColor: '#070',
-              pointColor: '#070',
-              pointStrokeColor: '#cfc',
-              data: response.data
-            },
-          ]
-        };
+      var populateDateFields = function() {
+        var api_key = $('#api_key').val();
+        var book_slug = $('#book_slug').val();
+        $.getJSON('/date_range.json?api_key=' + api_key + '&book_slug=' + book_slug, function(response) {
+          // ['2013-11-01', '2013-11-02']
+        });
+      };
 
-        new Chart(ctx).Line(chart_data);
-      });
+      var updateChart = function() {
+        var api_key = $('#api_key').val();
+        var book_slug = $('#book_slug').val();
+        $.getJSON('/number_of_sales_by_day.json?api_key=' + api_key + '&book_slug=' + book_slug, function(response) {
+          var chart_data = {
+            labels: response.labels,
+            datasets: [
+              {
+                fillColor: '#cfc',
+                strokeColor: '#070',
+                pointColor: '#070',
+                pointStrokeColor: '#cfc',
+                data: response.data
+              },
+            ]
+          };
+
+          new Chart(ctx).Line(chart_data);
+        });
+      };
 
     </script>
   </body>

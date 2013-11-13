@@ -18,7 +18,9 @@ def mock_request_individual_purchases(url):
 
 class CollectorTest(unittest.TestCase):
     def test_get_all_sales(self):
-        coll = collector.New('thekey', 'nodebeginner')
+        coll = collector.New()
+        coll.set_api_key('thekey')
+        coll.set_book_slug('nodebeginner')
         coll.client.httpclient.request = mock_request_individual_purchases
 
         all_sales = coll.get_all_sales()
