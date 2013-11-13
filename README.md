@@ -9,7 +9,8 @@ This is an early version of a web-based Leanpub© sales statistics viewer writte
 in Python.
 
 It currently offers exactly one use case: Display a line graph of all the sales
-a given Leanpub© book has generated per day, over a freely choosable time range.
+a given Leanpub© book has generated per day. The time range to display can be
+over a freely chosen.
 
 ![Screenshots](https://raw.github.com/manuelkiessling/lpstats/master/other/lpstats-0.0.1_screenshot_490x371.png)
 
