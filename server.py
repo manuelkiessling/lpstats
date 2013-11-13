@@ -28,7 +28,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             response = tra.date_range_to_json(date_range)
 
             self.send_response(200)
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-type', 'application/json; charset=utf-8')
             self.end_headers()
             self.wfile.write(response)
             return
@@ -56,7 +56,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             response = tra.number_of_sales_per_day_to_chartjs_json(number_of_sales_by_day)
 
             self.send_response(200)
-            self.send_header('Content-type', 'application/json')
+            self.send_header('Content-type', 'application/json; charset=utf-8')
             self.end_headers()
             self.wfile.write(response)
             return
@@ -64,7 +64,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         else:
             send_reply = False
             if path.endswith('.html'):
-                mimetype = 'text/html'
+                mimetype = 'text/html; charset=utf-8'
                 send_reply = True
             if path.endswith('.jpg'):
                 mimetype = 'image/jpg'
@@ -76,10 +76,10 @@ class RequestHandler(BaseHTTPRequestHandler):
                 mimetype = 'image/png'
                 send_reply = True
             if path.endswith('.js'):
-                mimetype = 'application/javascript'
+                mimetype = 'application/javascript; charset=utf-8'
                 send_reply = True
             if path.endswith('.css'):
-                mimetype = 'text/css'
+                mimetype = 'text/css; charset=utf-8'
                 send_reply = True
             
             if send_reply:
@@ -91,7 +91,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 f.close()
             else:
                 self.send_response(404)
-                self.send_header('Content-type', 'text/html')
+                self.send_header('Content-type', 'text/html; charset=utf-8')
                 self.end_headers()
                 self.wfile.write('404 Not found')
             return
