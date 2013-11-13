@@ -12,26 +12,44 @@
     <label for="book_slug">Book slug:</label>
     <input id="book_slug" type="text" name="book_slug">
     <br>
+    <label for="start_date">Start date:</label>
+    <select id="start_date"></select>
+    <br>
+    <label for="end_date">End date:</label>
+    <select id="end_date"></select>
+    <br>
     <input type="submit" onclick="updateChart();">
     <br>
 
-    <canvas id="chart" width="800" height="600"></canvas>
+    <canvas id="chart" width="1600" height="600"></canvas>
 
     <script language="javascript">
       var ctx = document.getElementById('chart').getContext('2d');
 
       var populateDateFields = function() {
+        $('#start_date').find('option').remove().end();
+        $('#end_date').find('option').remove().end();
         var api_key = $('#api_key').val();
         var book_slug = $('#book_slug').val();
         $.getJSON('/date_range.json?api_key=' + api_key + '&book_slug=' + book_slug, function(response) {
-          // ['2013-11-01', '2013-11-02']
+          $.each(response, function(index, date){
+              $('#start_date').append('<option value=' + date + '>' + date + '</option>');
+              $('#end_date').append('<option value=' + date + '>' + date + '</option>');
+          });
         });
       };
 
+      var dateFieldsArePopulated = false;
       var updateChart = function() {
         var api_key = $('#api_key').val();
         var book_slug = $('#book_slug').val();
-        $.getJSON('/number_of_sales_by_day.json?api_key=' + api_key + '&book_slug=' + book_slug, function(response) {
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+        if (!dateFieldsArePopulated) {
+            populateDateFields();
+            dateFieldsArePopulated = true;
+        }
+        $.getJSON('/number_of_sales_by_day.json?api_key=' + api_key + '&book_slug=' + book_slug + '&start_date=' + start_date + '&end_date=' + end_date, function(response) {
           var chart_data = {
             labels: response.labels,
             datasets: [

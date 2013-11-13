@@ -80,5 +80,19 @@ class AggregatorTest(unittest.TestCase):
                          ]
         self.assertEquals(expected_sales, sales)
 
+    def test_get_number_of_sales_by_day_with_range(self):
+        pass
+        agg = aggregator.New(data)
+        sales = agg.get_number_of_sales_by_day(start_date=datetime.date(year=2013, month=11, day=10), end_date=datetime.date(year=2013, month=11, day=11))
+
+        expected_sales = [{'date':datetime.date(year=2013, month=11, day=10),
+                           'number_of_sales':0,
+                          },
+                          {'date':datetime.date(year=2013, month=11, day=11),
+                           'number_of_sales':0,
+                          },
+                         ]
+        self.assertEquals(expected_sales, sales)
+
 if __name__ == '__main__':
     unittest.main()

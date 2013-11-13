@@ -10,6 +10,11 @@ number_of_sales_per_day = [{'date':datetime.date(year=2013, month=11, day=9),
                            },
                           ]
 
+date_range = [datetime.date(year=2013, month=11, day=9),
+              datetime.date(year=2013, month=11, day=10),
+              datetime.date(year=2013, month=11, day=11)
+             ]
+
 class TransformerTest(unittest.TestCase):
     def test_number_of_sales_per_day_to_chartjs_json(self):
         t = transformer.New()
@@ -20,10 +25,10 @@ class TransformerTest(unittest.TestCase):
 
     def test_date_range_to_json(self):
         t = transformer.New()
-        chartjs_json = t.number_of_sales_per_day_to_chartjs_json(number_of_sales_per_day)
+        date_range_json = t.date_range_to_json(date_range)
 
-        expected_chartjs_json = '{"labels": ["2013-11-09", "2013-11-10"], "data": [19, 25]}'
-        self.assertEquals(expected_chartjs_json, chartjs_json)
+        expected_date_range_json = '["2013-11-09", "2013-11-10", "2013-11-11"]'
+        self.assertEquals(expected_date_range_json, date_range_json)
 
 if __name__ == '__main__':
     unittest.main()

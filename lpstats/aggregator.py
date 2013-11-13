@@ -23,7 +23,7 @@ class Aggregator(object):
             date_range.append(oldest_date + datetime.timedelta(days=i))
         return date_range
 
-    def get_number_of_sales_by_day(self):
+    def get_number_of_sales_by_day(self, start_date=None, end_date=None):
         sales = {}
         date_range = self.get_date_range()
         for date in date_range:
@@ -32,7 +32,8 @@ class Aggregator(object):
             sales[self._get_date_of_entry(index)] += 1
         result = []
         for date in date_range:
-            result.append({'date': date, 'number_of_sales': sales[date]})
+            if (start_date == None) or (start_date and end_date) and (date >= start_date and date <= end_date):
+                result.append({'date': date, 'number_of_sales': sales[date]})
         return result
 
 New = Aggregator  

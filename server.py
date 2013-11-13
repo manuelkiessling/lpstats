@@ -1,6 +1,8 @@
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep
 import urlparse
+import time
+import datetime
 from lpstats import collector, aggregator, transformer
 
 PORT_NUMBER = 8080
@@ -17,9 +19,11 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         urlparts = urlparse.urlparse(self.path)
         path = urlparts.path
+
         if path == '/':
             path = '/index.html'
-        if path == '/number_of_sales_by_day.json':
+
+        if path == '/date_range.json':
             query = urlparse.parse_qs(urlparts.query)
             api_key = query['api_key'][0]
             book_slug = query['book_slug'][0]
@@ -27,7 +31,35 @@ class RequestHandler(BaseHTTPRequestHandler):
             coll.set_book_slug(book_slug)
             all_sales = coll.get_all_sales()
             agg = aggregator.New(all_sales)
-            number_of_sales_by_day = agg.get_number_of_sales_by_day()
+            date_range = agg.get_date_range()
+            tra = transformer.New()
+            response = tra.date_range_to_json(date_range)
+
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(response)
+            return
+
+        if path == '/number_of_sales_by_day.json':
+            query = urlparse.parse_qs(urlparts.query)
+            api_key = query['api_key'][0]
+            book_slug = query['book_slug'][0]
+            start_date = query['start_date'][0]
+            end_date = query['end_date'][0]
+            if start_date == 'null' or end_date == 'null':
+                start_date = None
+                end_date = None
+            else:
+                start_date = time.strptime(start_date, '%Y-%m-%d')
+                end_date = time.strptime(end_date, '%Y-%m-%d')
+                start_date = datetime.date(year=start_date.tm_year, month=start_date.tm_mon, day=start_date.tm_mday)
+                end_date = datetime.date(year=end_date.tm_year, month=end_date.tm_mon, day=end_date.tm_mday)
+            coll.set_api_key(api_key)
+            coll.set_book_slug(book_slug)
+            all_sales = coll.get_all_sales()
+            agg = aggregator.New(all_sales)
+            number_of_sales_by_day = agg.get_number_of_sales_by_day(start_date=start_date, end_date=end_date)
             tra = transformer.New()
             response = tra.number_of_sales_per_day_to_chartjs_json(number_of_sales_by_day)
 
@@ -36,6 +68,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(response)
             return
+
         else:
             send_reply = False
             if path.endswith('.html'):
