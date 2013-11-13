@@ -4,6 +4,15 @@
     <title>Leanpub sales statistics</title>
     <script type="text/javascript" src="jquery-1.10.2.js"></script>
     <script type="text/javascript" src="chart-8f025f33c0.js"></script>
+    <style>
+      html {
+        font-family: Verdana, Arial, sans-serif;
+      }
+      label {
+        display: inline-block;
+        width: 200px;
+      }
+    </style>
   </head>
   <body>
     <label for="api_key">Your Leanpub API Key:</label>
@@ -18,10 +27,12 @@
     <label for="end_date">End date:</label>
     <select id="end_date"></select>
     <br>
-    <input type="submit" onclick="updateChart();">
+    <label for="end_date"></label>
+    <input id="submit" type="submit" value="Generate graph" onclick="updateChart();">
+    <span id="loadnote" style="display:none">Loading, this may take some time...</span>
     <br>
 
-    <canvas id="chart" width="1600" height="600"></canvas>
+    <canvas id="chart" width="1000" height="600"></canvas>
 
     <script language="javascript">
       var ctx = document.getElementById('chart').getContext('2d');
@@ -42,15 +53,23 @@
 
       var dateFieldsArePopulated = false;
       var updateChart = function() {
+        $('#loadnote').fadeIn();
         var api_key = $('#api_key').val();
         var book_slug = $('#book_slug').val();
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
+        if (start_date >= end_date) {
+          $('#start_date option:first-child').attr('selected', 'selected')
+          $('#end_date option:last-child').attr('selected', 'selected')
+          var start_date = $('#start_date').val();
+          var end_date = $('#end_date').val();
+        }
         if (!dateFieldsArePopulated) {
             populateDateFields();
             dateFieldsArePopulated = true;
         }
         $.getJSON('/number_of_sales_by_day.json?api_key=' + api_key + '&book_slug=' + book_slug + '&start_date=' + start_date + '&end_date=' + end_date, function(response) {
+          $('#loadnote').fadeOut();
           var chart_data = {
             labels: response.labels,
             datasets: [
