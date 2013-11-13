@@ -23,6 +23,7 @@ https://leanpub.com/dashboard/account in order to generate your API key.
 These instructions have been tested to work on Debian GNU/Linux 7.0 "Wheezy".
 
 You will need to set up a virtualenv for Python 2.x:
+
     sudo apt-get install python-virtualenv
     virtualenv lpstats-env
     cd lpstats-env
