@@ -107,7 +107,7 @@ def mock_request_individual_purchases(url):
 if __name__ == '__main__':
     try:
         coll = collector.New()
-        coll.client.httpclient.request = mock_request_individual_purchases
+        #coll.client.httpclient.request = mock_request_individual_purchases
         server = HTTPServer(('', PORT_NUMBER), RequestHandler)
         print 'Started HTTP server on port', PORT_NUMBER
         server.serve_forever()
