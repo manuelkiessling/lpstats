@@ -4,3 +4,4 @@ lpstats.egg-info
 .cache
 build
 dist
+httplib2-0.8-py3.2.egg
