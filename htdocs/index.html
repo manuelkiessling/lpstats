@@ -36,6 +36,7 @@
               $('#start_date').append('<option value=' + date + '>' + date + '</option>');
               $('#end_date').append('<option value=' + date + '>' + date + '</option>');
           });
+          $('#end_date option:last-child').attr('selected', 'selected')
         });
       };
 
