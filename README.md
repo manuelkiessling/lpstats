@@ -1,20 +1,20 @@
-# lpstats - Leanpub Statistics Tool
+# lpstats - Leanpub© Statistics Tool
 
 [![Build Status](https://travis-ci.org/manuelkiessling/lpstats.png?branch=master)](https://travis-ci.org/manuelkiessling/lpstats)
 
 
 ## About
 
-This is an early version of a web-based Leanpub sales statistics viewer written
+This is an early version of a web-based Leanpub© sales statistics viewer written
 in Python.
 
 It currently offers exactly one use case: Display a line graph of all the sales
-a given Leanpub book has generated per day, over a freely choosable time range.
+a given Leanpub© book has generated per day, over a freely choosable time range.
 
 ![Screenshots](https://raw.github.com/manuelkiessling/lpstats/master/other/lpstats-0.0.1_screenshot_490x371.png)
 
-It includes a very simple client for the Leanpub API that is used to retrieve
-the sales data for the book in question. Please log in to Leanpub and go to
+It includes a very simple client for the Leanpub© API that is used to retrieve
+the sales data for the book in question. Please log in to Leanpub© and go to
 https://leanpub.com/dashboard/account in order to generate your API key.
 
 
@@ -64,3 +64,7 @@ You can now open your browser at http://localhost:8080/
     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The Leanpub logo and the names of all Leanpub products and/or services are
+either trademarks or service marks, or registered trademarks and/or service
+marks of Ruboss and all rights are reserved therein by Ruboss.
